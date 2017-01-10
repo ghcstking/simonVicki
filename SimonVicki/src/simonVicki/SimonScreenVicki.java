@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import gui.ClickableScreen;
 import gui.components.Action;
+import gui.components.Button;
 import gui.components.TextLabel;
 import gui.components.Visible;
+import simon.MoveInterfaceVicki;
 
 public class SimonScreenVicki extends ClickableScreen implements Runnable {
 	
@@ -15,8 +17,10 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 	private int roundNumber;
 	private boolean acceptedInput;
 	private TextLabel label;
+	private TextLabel progressLabel;
 	private int lastSelectedButton;
 	private int sequenceIndex;
+	private boolean playersTurn;
 	
 	public SimonScreenVicki(int width, int height) {
 		super(width, height);
@@ -27,13 +31,43 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 
 	@Override
 	public void run() {
-		
+		playersTurn = false;
+		moves.add(randomMove());
+		roundNumber++;
 	}
 
 	@Override
 	public void initAllObjects(ArrayList<Visible> viewObjects) {
-		addButtons();
-		progress = getProgress();
+		int numOfButtons = 6;
+		String[] colors = {"new Color(205,154,154)", "new Color(154,164,205)", "new Color(164,205,154)",
+				"new Color(160,60,155)", "new Color(225,225,155)", "new Color(225,155,155)"};
+		buttons = new ButtonInterfaceVicki[numOfButtons];
+		for (int i = 0; i < colors.length; i++) {
+			buttons[i] = getAButton();
+			buttons[i].setColor(colors[i]);
+			buttons[i].setCoords(160 + (int)(100*Math.cos(i*2*Math.PI/(numOfButtons))), 
+					(200 - (int)(100*Math.sin(i*2*Math.PI/(numOfButtons)))));
+			final ButtonInterfaceVicki b = buttons[i];
+			buttons[i].setAction(new Action(){
+				public void act(){
+					Thread blink = new Thread(new Runnable(){
+
+						@Override
+						public void run() {
+							((ButtonInterfaceVicki) b).turnOn();
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							b.turnOff();
+						}
+					});
+					blink.start();
+				}
+		});
+		viewObjects.add(buttons[i]);
+	}
 		label = new TextLabel(130,230,300,40,"Let's play Simon!");
 		moves = new ArrayList<MoveInterfaceVicki>();
 		lastSelectedButton = -1;
@@ -42,27 +76,7 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		roundNumber = 0;
 		viewObjects.add(progress);
 		viewObjects.add(label);
-		
-		final Button b = getAButton();
-		// must create Button class
-		b.setAction(new Action(){
-
-		public void act(){
-
-		Thread blink = new Thread(new Runnable(){
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				
-			}
-		//code for turning on, sleeping for 800ms and turning back off again goes here.
-		});
-		blink.start();
-		}
-
-		});
-	}
+}
 
 	private MoveInterfaceVicki randomMove() {
 		int random = (int) (Math.random() * buttons.length);
@@ -74,33 +88,28 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		// must create Move class
 	}
 	
+	public void gameOver() {
+		progress.gameOver();
+	}
+	
 	/**
 	Placeholder until partner finishes implementation of ProgressInterface
 	*/
 	private ProgressInterfaceVicki getProgress() {
 		return new Progress();
+		// must create Progress class
 	}
-
-	private void addButtons() {
-		int numOfButtons = 6;
-		String[] colors = {"new Color(205,154,154)", "new Color(154,164,205)", "new Color(164,205,154)",
-				"new Color(160,60,155)", "new Color(225,225,155)", "new Color(225,155,155)"};
-		for (int i = 0; i < colors.length; i++) {
-			buttons[i] = getAButton();
-			buttons[i].setColor(i);
-			buttons[i].setCoords(160 + (int)(100*Math.cos(i*2*Math.PI/(numOfButtons))), 
-					(200 - (int)(100*Math.sin(i*2*Math.PI/(numOfButtons)))));
-			buttons[i].setAction(new Action(){
-
-				public void act(){
-
-				}
-
-				});
-		}
-	}
-
+	
 	private ButtonInterfaceVicki getAButton() {
-		return null;
+		return new Button();
+	}
+	
+	public void changeText(String s) {
+		label.setText(s);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
