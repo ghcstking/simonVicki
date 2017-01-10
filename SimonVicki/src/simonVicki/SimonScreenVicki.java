@@ -20,13 +20,13 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 	
 	public SimonScreenVicki(int width, int height) {
 		super(width, height);
+		roundNumber = 0;
 		Thread one = new Thread(this);
 		one.start();
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -88,8 +88,8 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		for (int i = 0; i < colors.length; i++) {
 			buttons[i] = getAButton();
 			buttons[i].setColor(i);
-			buttons[i].setX(160 + (int)(100*Math.cos(i*2*Math.PI/(numOfButtons))));
-			buttons[i].setY(200 - (int)(100*Math.sin(i*2*Math.PI/(numOfButtons))));
+			buttons[i].setCoords(160 + (int)(100*Math.cos(i*2*Math.PI/(numOfButtons))), 
+					(200 - (int)(100*Math.sin(i*2*Math.PI/(numOfButtons)))));
 			buttons[i].setAction(new Action(){
 
 				public void act(){
