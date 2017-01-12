@@ -1,5 +1,6 @@
 package simonVicki;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import gui.ClickableScreen;
@@ -7,6 +8,8 @@ import gui.components.Action;
 import gui.components.Button;
 import gui.components.TextLabel;
 import gui.components.Visible;
+import partnerCodeHere.Move;
+import partnerCodeHere.Progress;
 import simonVicki.MoveInterfaceVicki;
 
 public class SimonScreenVicki extends ClickableScreen implements Runnable {
@@ -44,17 +47,16 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 
 	@Override
 	public void initAllObjects(ArrayList<Visible> viewObjects) {
-		int numOfButtons = 6;
-		String[] colors = {"new Color(205,154,154)", "new Color(154,164,205)", "new Color(164,205,154)",
-				"new Color(160,60,155)", "new Color(225,225,155)", "new Color(225,155,155)"};
+		int numOfButtons = 4;
+		Color[] colors = {Color.red, Color.blue, Color.yellow, Color.GREEN};
 		buttons = new ButtonInterfaceVicki[numOfButtons];
-		for (int i = 0; i < colors.length; i++) {
-			buttons[i] = getAButton();
-			buttons[i].setColor(colors[i]);
-			buttons[i].setCoords(160 + (int)(100*Math.cos(i*2*Math.PI/(numOfButtons))), 
-					(200 - (int)(100*Math.sin(i*2*Math.PI/(numOfButtons)))));
+		for (int i = 0; i < numOfButtons; i++) {
 			ButtonInterfaceVicki b = buttons[i];
-			buttons[i].setAction(new Action(){
+			buttons[i] = getAButton();
+			b.setColor(colors[i]);
+			b.setCoords(160 + (int)(100*Math.cos(i*2*Math.PI/(numOfButtons))), 
+					(200 - (int)(100*Math.sin(i*2*Math.PI/(numOfButtons)))));
+			b.setAction(new Action(){
 				public void act(){
 					Thread blink = new Thread(new Runnable(){
 
@@ -102,17 +104,15 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 			random = (int) (Math.random() * buttons.length);
 		}
 		lastSelectedButton = random;
-		return Move(buttons[lastSelectedButton]);
-		// must create Move class
+		return null;//new Move(buttons[lastSelectedButton]);
 	}
 	
 	private ProgressInterfaceVicki getProgress() {
-		return new Progress();
-		// must create Progress class
+		return null;
 	}
 	
 	private ButtonInterfaceVicki getAButton() {
-		return new Button();
+		return null;
 	}
 	
 	public void changeText(String s) {
