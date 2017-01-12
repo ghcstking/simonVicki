@@ -51,10 +51,11 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		int numOfButtons = 4;
 		Color[] colors = {Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN};
 		buttons = new ButtonInterfaceVicki[numOfButtons];
+		progress = getProgress();
 		for (int i = 0; i < numOfButtons; i++) {
 			buttons[i] = getAButton();
 			buttons[i].setColor(colors[i]);
-			buttons[i].setCoords((50 * i), (40));
+			buttons[i].setCoords((75 * i) + 250, (50));
 			final ButtonInterfaceVicki b = buttons[i];
 			b.setAction(new Action(){
 				public void act(){
@@ -88,7 +89,7 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		});
 		viewObjects.add(buttons[i]);
 	}
-		label = new TextLabel(130,230,300,40,"Let's play Simon!");
+		label = new TextLabel(130,100,300,40,"Let's play Simon!");
 		moves = new ArrayList<MoveInterfaceVicki>();
 		lastSelectedButton = -1;
 		moves.add(randomMove());
