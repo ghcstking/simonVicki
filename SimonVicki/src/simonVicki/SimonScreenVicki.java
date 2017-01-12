@@ -7,11 +7,11 @@ import gui.ClickableScreen;
 import gui.components.Action;
 import gui.components.TextLabel;
 import gui.components.Visible;
-import partnerCodeHere.Move;
-import partnerCodeHere.Progress;
+import simonVicki.Move;
+import simonVicki.Progress;
 import simonVicki.MoveInterfaceVicki;
 import simonVicki.ButtonInterfaceVicki;
-import partnerCodeHere.Button;
+import simonVicki.Button;
 
 public class SimonScreenVicki extends ClickableScreen implements Runnable {
 	
@@ -38,7 +38,7 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		moves.add(randomMove());
 		progress.updateInfo(roundNumber, moves.size());
 		changeText("Let's play Simon!");
-		changeText("Simon's turn");
+		changeText("My turn");
 		label.setText("");
 		showColors();
 		changeText("Your turn!");
@@ -55,9 +55,9 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		progress = getProgress();
 		for (int i = 0; i < numOfButtons; i++) {
 			buttons[i] = getAButton();
-			buttons[i].setColor(colors[i]);
 			buttons[i].setX((75 * i) + 250);
-			buttons[i].setX(50);
+			buttons[i].setY(50);
+			buttons[i].setColor(colors[i]);
 			final ButtonInterfaceVicki b = buttons[i];
 			b.setAction(new Action(){
 				public void act(){
@@ -74,21 +74,22 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 						}
 					});
 					blink.start();
-					if (playerClickIndex == moves.size()) {
-						Thread game = new Thread(SimonScreenVicki.this);
-						game.start();
-					}
-					if(playerClickIndex < moves.size()) {
-						if(b.getColor() == moves.get(playerClickIndex).getButton().getColor()) {
+					if(playerClickIndex<moves.size()-1){
+						if(b.getColor() == moves.get(playerClickIndex).getButton().getColor()){
 							playerClickIndex++;
 						}
-						else {
+						else{
 							progress.gameOver();
 						}
 					}
+					else{
+						Thread game = new Thread(SimonScreenVicki.this);
+						game.start();
+					}
+					// this isnt working yet
 				}
 		});
-		viewObjects.add(b);
+		viewObjects.add(buttons[i]);
 	}
 		label = new TextLabel(325,250,300,40,"");
 		moves = new ArrayList<MoveInterfaceVicki>();
@@ -133,6 +134,7 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 				e.printStackTrace();
 			}
 			m.getButton().turnOn();
+			System.out.println(m.getButton().getColor());
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
