@@ -48,18 +48,16 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 	@Override
 	public void initAllObjects(ArrayList<Visible> viewObjects) {
 		int numOfButtons = 4;
-		Color[] colors = {Color.red, Color.blue, Color.yellow, Color.GREEN};
+		Color[] colors = {Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN};
 		buttons = new ButtonInterfaceVicki[numOfButtons];
 		for (int i = 0; i < numOfButtons; i++) {
-			ButtonInterfaceVicki b = buttons[i];
 			buttons[i] = getAButton();
-			b.setColor(colors[i]);
-			b.setCoords(160 + (int)(100*Math.cos(i*2*Math.PI/(numOfButtons))), 
-					(200 - (int)(100*Math.sin(i*2*Math.PI/(numOfButtons)))));
+			buttons[i].setColor(colors[i]);
+			buttons[i].setCoords((50 * i), (40));
+			ButtonInterfaceVicki b = buttons[i];
 			b.setAction(new Action(){
 				public void act(){
 					Thread blink = new Thread(new Runnable(){
-
 						@Override
 						public void run() {
 							b.turnOn();
