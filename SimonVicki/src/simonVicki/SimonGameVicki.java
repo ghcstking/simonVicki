@@ -6,7 +6,6 @@ public class SimonGameVicki extends GUIApplication {
 
 	public SimonGameVicki(int width, int height) {
 		super(width, height);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
