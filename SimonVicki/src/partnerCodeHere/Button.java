@@ -16,7 +16,7 @@ public class Button  extends Component implements ButtonInterfaceVicki{
 
 	public Button() {
 		super(0, 0, 700, 700);
-		highlight = false;
+		light = false;
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class Button  extends Component implements ButtonInterfaceVicki{
 	}
 
 	@Override
-	public boolean isHovered(int arg0, int arg1) {
+	public boolean isHovered(int x, int y) {
 		return x>getX() && x<getX()+getWidth() && y > getY() && y<getY()+getHeight();
 	}
 
