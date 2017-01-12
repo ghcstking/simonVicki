@@ -5,12 +5,13 @@ import java.util.ArrayList;
 
 import gui.ClickableScreen;
 import gui.components.Action;
-import gui.components.Button;
 import gui.components.TextLabel;
 import gui.components.Visible;
 import partnerCodeHere.Move;
 import partnerCodeHere.Progress;
 import simonVicki.MoveInterfaceVicki;
+import simonVicki.ButtonInterfaceVicki;
+import partnerCodeHere.Button;
 
 public class SimonScreenVicki extends ClickableScreen implements Runnable {
 	
@@ -54,7 +55,7 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 			buttons[i] = getAButton();
 			buttons[i].setColor(colors[i]);
 			buttons[i].setCoords((50 * i), (40));
-			ButtonInterfaceVicki b = buttons[i];
+			final ButtonInterfaceVicki b = buttons[i];
 			b.setAction(new Action(){
 				public void act(){
 					Thread blink = new Thread(new Runnable(){
@@ -96,21 +97,21 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		viewObjects.add(label);
 }
 
+	public ButtonInterfaceVicki getAButton() {
+		return new Button();
+	}
+
 	private MoveInterfaceVicki randomMove() {
 		int random = (int) (Math.random() * buttons.length);
 		if (random == lastSelectedButton) {
 			random = (int) (Math.random() * buttons.length);
 		}
 		lastSelectedButton = random;
-		return null;//new Move(buttons[lastSelectedButton]);
+		return new Move(buttons[lastSelectedButton]);
 	}
 	
 	private ProgressInterfaceVicki getProgress() {
-		return null;
-	}
-	
-	private ButtonInterfaceVicki getAButton() {
-		return null;
+		return new Progress();
 	}
 	
 	public void changeText(String s) {
@@ -133,7 +134,6 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			m.getButton().turnOff();
