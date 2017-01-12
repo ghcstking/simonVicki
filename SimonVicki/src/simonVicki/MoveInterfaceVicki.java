@@ -1,5 +1,5 @@
 package simonVicki;
 
 public interface MoveInterfaceVicki {
-	ButtonInterfaceVicki getAButton();
+	ButtonInterfaceVicki getButton();
 }
