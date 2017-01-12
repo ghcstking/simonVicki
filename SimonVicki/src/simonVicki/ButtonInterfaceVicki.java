@@ -12,4 +12,5 @@ public interface ButtonInterfaceVicki extends Clickable {
 	public void setCoords(int x, int y);
 	public void setColor(Color c);
 	public Color getColor();
+	public void setX(int i);
 }

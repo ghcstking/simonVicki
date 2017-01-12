@@ -14,9 +14,9 @@ public class Button  extends Component implements ButtonInterfaceVicki{
 	private Color initColor;
 	private boolean light;
 
-	public Button(int x, int y, int w, int h) {
-		super(x, y, w, h);
-		// TODO Auto-generated constructor stub
+	public Button() {
+		super(0, 0, 700, 700);
+		highlight = false;
 	}
 
 	@Override
@@ -27,8 +27,7 @@ public class Button  extends Component implements ButtonInterfaceVicki{
 
 	@Override
 	public boolean isHovered(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return false;
+		return x>getX() && x<getX()+getWidth() && y > getY() && y<getY()+getHeight();
 	}
 
 	@Override
@@ -57,9 +56,7 @@ public class Button  extends Component implements ButtonInterfaceVicki{
 
 	@Override
 	public void setColor(Color c) {
-		this.c = c;
-		
-		
+		this.initColor = c;
 	}
 
 	@Override
@@ -68,8 +65,7 @@ public class Button  extends Component implements ButtonInterfaceVicki{
 		return null;
 	}
 	public void highlight() {
-		if(c != null) displayColor = c;
-		highlight = true;
+		light = true;
 		update();
 	}
 
@@ -83,8 +79,6 @@ public class Button  extends Component implements ButtonInterfaceVicki{
 	public void update(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setColor(initColor);
-		
-		
 	}
 
 }

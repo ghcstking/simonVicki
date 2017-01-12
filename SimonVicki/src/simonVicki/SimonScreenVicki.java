@@ -37,7 +37,8 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		roundNumber++;
 		moves.add(randomMove());
 		progress.updateInfo(roundNumber, moves.size());
-		changeText("Updating... my turn");
+		changeText("Let's play Simon!");
+		changeText("Simon's turn");
 		label.setText("");
 		showColors();
 		changeText("Your turn!");
@@ -55,7 +56,8 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		for (int i = 0; i < numOfButtons; i++) {
 			buttons[i] = getAButton();
 			buttons[i].setColor(colors[i]);
-			buttons[i].setCoords((75 * i) + 250, (50));
+			buttons[i].setX((75 * i) + 250);
+			buttons[i].setX(50);
 			final ButtonInterfaceVicki b = buttons[i];
 			b.setAction(new Action(){
 				public void act(){
@@ -82,14 +84,13 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 						}
 						else {
 							progress.gameOver();
-							label = new TextLabel(130, 230, 300, 40, "Game over!");
 						}
 					}
 				}
 		});
-		viewObjects.add(buttons[i]);
+		viewObjects.add(b);
 	}
-		label = new TextLabel(130,100,300,40,"Let's play Simon!");
+		label = new TextLabel(325,250,300,40,"");
 		moves = new ArrayList<MoveInterfaceVicki>();
 		lastSelectedButton = -1;
 		moves.add(randomMove());
