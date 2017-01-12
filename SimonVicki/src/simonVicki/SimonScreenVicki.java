@@ -7,7 +7,7 @@ import gui.components.Action;
 import gui.components.Button;
 import gui.components.TextLabel;
 import gui.components.Visible;
-import simon.MoveInterfaceVicki;
+import simonVicki.MoveInterfaceVicki;
 
 public class SimonScreenVicki extends ClickableScreen implements Runnable {
 	
@@ -15,25 +15,31 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 	private ButtonInterfaceVicki[] buttons;
 	private ArrayList<MoveInterfaceVicki> moves;
 	private int roundNumber;
-	private boolean acceptedInput;
+	private boolean inputNow;
 	private TextLabel label;
-	private TextLabel progressLabel;
 	private int lastSelectedButton;
-	private int sequenceIndex;
-	private boolean playersTurn;
+	private int playerClickIndex;
 	
 	public SimonScreenVicki(int width, int height) {
 		super(width, height);
 		roundNumber = 0;
-		Thread one = new Thread(this);
-		one.start();
+		Thread game = new Thread(this);
+		game.start();
 	}
 
 	@Override
 	public void run() {
-		playersTurn = false;
-		moves.add(randomMove());
+		inputNow = false;
 		roundNumber++;
+		moves.add(randomMove());
+		progress.updateInfo(roundNumber, moves.size());
+		changeText("Updating... my turn");
+		label.setText("");
+		showColors();
+		changeText("Your turn!");
+		label.setText("");
+		playerClickIndex = 0;
+		inputNow = true;
 	}
 
 	@Override
@@ -47,14 +53,14 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 			buttons[i].setColor(colors[i]);
 			buttons[i].setCoords(160 + (int)(100*Math.cos(i*2*Math.PI/(numOfButtons))), 
 					(200 - (int)(100*Math.sin(i*2*Math.PI/(numOfButtons)))));
-			final ButtonInterfaceVicki b = buttons[i];
+			ButtonInterfaceVicki b = buttons[i];
 			buttons[i].setAction(new Action(){
 				public void act(){
 					Thread blink = new Thread(new Runnable(){
 
 						@Override
 						public void run() {
-							((ButtonInterfaceVicki) b).turnOn();
+							b.turnOn();
 							try {
 								Thread.sleep(500);
 							} catch (InterruptedException e) {
@@ -64,6 +70,19 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 						}
 					});
 					blink.start();
+					if (playerClickIndex == moves.size()) {
+						Thread game = new Thread(SimonScreenVicki.this);
+						game.start();
+					}
+					if(playerClickIndex < moves.size()) {
+						if(b.getColor() == moves.get(playerClickIndex).getButton().getColor()) {
+							playerClickIndex++;
+						}
+						else {
+							progress.gameOver();
+							label = new TextLabel(130, 230, 300, 40, "Game over!");
+						}
+					}
 				}
 		});
 		viewObjects.add(buttons[i]);
@@ -73,7 +92,6 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		lastSelectedButton = -1;
 		moves.add(randomMove());
 		moves.add(randomMove());
-		roundNumber = 0;
 		viewObjects.add(progress);
 		viewObjects.add(label);
 }
@@ -88,13 +106,6 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 		// must create Move class
 	}
 	
-	public void gameOver() {
-		progress.gameOver();
-	}
-	
-	/**
-	Placeholder until partner finishes implementation of ProgressInterface
-	*/
 	private ProgressInterfaceVicki getProgress() {
 		return new Progress();
 		// must create Progress class
@@ -110,6 +121,24 @@ public class SimonScreenVicki extends ClickableScreen implements Runnable {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void showColors() {
+		for(MoveInterfaceVicki m: moves){
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			m.getButton().turnOn();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			m.getButton().turnOff();
 		}
 	}
 }
