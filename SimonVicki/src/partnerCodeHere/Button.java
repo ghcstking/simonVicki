@@ -1,21 +1,23 @@
 package partnerCodeHere;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import gui.components.Action;
 import gui.components.Component;
+import simonVicki.ButtonInterfaceVicki;
 
 public class Button extends Component implements ButtonInterfaceVicki {
 
 	private Action action;
 	private Color c;
 	private boolean highlight;
-	private int x;
-	private int y;
+	private static int x;
+	private static int y;
 	
 	public Button() {
-		super(0, 0, 80, 80);
+		super(x, y, 80, 80);
 		highlight = false;
 	}
 
@@ -72,5 +74,18 @@ public class Button extends Component implements ButtonInterfaceVicki {
 	@Override
 	public Color getColor() {
 		return c;
+	}
+
+	@Override
+	public void setX(int i) {
+		this.x = i;
+		update();
+
+	}
+
+	@Override
+	public void setY(int i) {
+		this.y = i;
+		update();
 	}
 }
