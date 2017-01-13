@@ -81,4 +81,10 @@ public class Button  extends Component implements ButtonInterfaceVicki{
 		g.setColor(initColor);
 	}
 
+	@Override
+	public void setX(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
