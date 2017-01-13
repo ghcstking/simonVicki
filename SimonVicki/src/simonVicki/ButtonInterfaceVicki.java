@@ -6,11 +6,11 @@ import gui.components.Action;
 import gui.components.Clickable;
 
 public interface ButtonInterfaceVicki extends Clickable {
-	public void turnOn();
-	public void turnOff();
-	public void setAction(Action action);
-	public void setCoords(int x, int y);
-	public void setColor(Color c);
-	public Color getColor();
-	public void setX(int i);
+	public void setAction(Action a);
+	void setColor(Color i);
+	void turnOn();
+	void turnOff();
+	Color getColor();
+	void setX(int i);
+	void setY(int i);
 }
