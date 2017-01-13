@@ -45,15 +45,15 @@ public class Button extends Component implements ButtonInterfaceVicki {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		if(highlight) {
 			g.setColor(this.c);
-			g.fillOval(0, 0, 65, 65);
+			g.fillRect(0, 0, 65, 65);
 			g.setColor(Color.black);
-			g.drawOval(0, 0, 65, 65);
+			g.drawRect(0, 0, 65, 65);
 		}
 		else {
 			g.setColor(Color.gray);
-			g.fillOval(0, 0, 65, 65);
+			g.fillRect(0, 0, 65, 65);
 			g.setColor(Color.black);
-			g.drawOval(0, 0, 65, 65);
+			g.drawRect(0, 0, 65, 65);
 		}
 	}
 
