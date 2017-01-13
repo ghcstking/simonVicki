@@ -21,6 +21,7 @@ public class Progress extends Component implements ProgressInterfaceVicki {
 	@Override
 	public void gameOver() {
 		gameOver = true;
+		update();
 	}
 
 	@Override
@@ -35,20 +36,20 @@ public class Progress extends Component implements ProgressInterfaceVicki {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		if(gameOver){
 			g.setColor(Color.gray);
-			g.fillRoundRect(0, 0, 95, 100, 20, 20);
+			g.fillRoundRect(0, 0, 150, 95, 20, 20);
 			g.setColor(Color.black);
 			g.drawRoundRect(0,0,150,95,20,20);	
-			g.drawString("Yikes. Game over!",5,35);
-			g.drawString("Round: "+roundNum,5,55);
-			g.drawString("Sequence Length: "+sequence,5,75);
+			g.drawString("Yikes. Game over!",35,35);
+			g.drawString("Round: " + roundNum,50,55);
+			g.drawString("Sequence Length: " + sequence,20,75);
 		}
 		else{
 			g.setColor(Color.cyan);
 			g.fillRoundRect(0, 0, 150, 95, 20, 20);
 			g.setColor(Color.black);
 			g.drawRoundRect(0,0,150,95,20,20);
-			g.drawString("Round:"+roundNum,50,35);
-			g.drawString("Sequence Length:"+sequence,25,65);
+			g.drawString("Round: " + roundNum,50,35);
+			g.drawString("Sequence Length: " + sequence,25,65);
 		}
 	}
 	
