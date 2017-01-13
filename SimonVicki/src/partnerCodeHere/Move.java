@@ -2,7 +2,8 @@ package partnerCodeHere;
 
 import simonVicki.ButtonInterfaceVicki;
 import simonVicki.MoveInterfaceVicki;
-public class Move implements MoveInterfaceVicki{
+
+public class Move implements MoveInterfaceVicki {
 	
 	private ButtonInterfaceVicki button;
 	
