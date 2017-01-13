@@ -57,7 +57,7 @@ public class Button extends Component implements ButtonInterfaceVicki {
 		}
 	}
 
-	@Override
+
 	public void turnOn() {
 		highlight = true;
 		update();
@@ -73,8 +73,6 @@ public class Button extends Component implements ButtonInterfaceVicki {
 	public Color getColor() {
 		return c;
 	}
-
-
 
 }
 
