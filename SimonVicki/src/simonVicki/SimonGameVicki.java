@@ -1,11 +1,11 @@
 package simonVicki;
 
-import gui.GUIApplication;
+import gui.practice.GUIApplication;
 
 public class SimonGameVicki extends GUIApplication {
 
-	public SimonGameVicki(int width, int height) {
-		super(width, height);
+	public SimonGameVicki() {
+		super();
 	}
 
 	@Override
@@ -15,7 +15,7 @@ public class SimonGameVicki extends GUIApplication {
 	}
 	
 	public static void main(String[] args) {
-		SimonGameVicki game = new SimonGameVicki(800,500);
+		SimonGameVicki game = new SimonGameVicki();
 		Thread app = new Thread(game);
 		app.start();
 	}
